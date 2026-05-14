@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chợ Tốt — Social Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --bg:         #F5F2EE;
+    --surface:    #FFFFFF;
+    --surface2:   #FAF8F5;
+    --border:     #E4DDD4;
+    --border2:    #D0C8BC;
+    --ink:        #1A1512;
+    --ink2:       #4A403A;
+    --ink3:       #8A7E76;
+    --accent:     #E84B2A;
+    --accent2:    #FF7A5C;
+    --gold:       #C8922A;
+    --green:      #2A7A52;
+    --blue:       #2A5ABA;
+    --warn:       #D97B00;
+    --tab-h:      52px;
+    --radius:     12px;
+    --shadow:     0 2px 12px rgba(26,21,18,.08);
+    --shadow-lg:  0 8px 40px rgba(26,21,18,.12);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    color: #fff; font-size: 18px; font-weight: 400;
+  }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; color: var(--ink);
+    letter-spacing: -0.3px;
+  }
+  .logo-sub {
+    font-size: 11px; font-weight: 500; color: var(--ink3);
+    letter-spacing: 1.2px; text-transform: uppercase;
+    margin-top: 1px;
+  }
+  .header-meta {
+    font-size: 12px; color: var(--ink3);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── Tab Bar ── */
+  .tab-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab-bar::-webkit-scrollbar { height: 3px; }
+  .tab-bar::-webkit-scrollbar-track { background: var(--border); }
+  .tab-bar::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  .tab-btn {
+    height: var(--tab-h);
+    padding: 0 20px;
+    border: none; background: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--ink3);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color .2s, border-color .2s;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent2); opacity: .7;
+  }
+  .tab-btn.active .tab-dot { opacity: 1; background: var(--accent); }
+
+  /* ── Content Panels ── */
+  .tab-panel { display: none; padding: 36px 40px 60px; max-width: 1280px; margin: 0 auto; }
+  .tab-panel.active { display: block; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Typography ── */
+  h1.page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--ink); letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  h2.section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; font-weight: 400;
+    color: var(--ink); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  h3.sub-title {
+    font-size: 13px; font-weight: 600;
+    color: var(--ink); text-transform: uppercase;
+    letter-spacing: .8px; margin-bottom: 12px;
+  }
+  .page-sub {
+    font-size: 13px; color: var(--ink3); margin-bottom: 32px;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 40px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .card-sm { padding: 16px 20px; }
+  .card + .card { margin-top: 16px; }
+
+  /* ── KPI Grid ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .kpi-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+  .kpi-label {
+    font-size: 11px; font-weight: 600; color: var(--ink3);
+    text-transform: uppercase; letter-spacing: .9px; margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; color: var(--ink);
+    letter-spacing: -0.5px; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .kpi-value.mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 11px; font-weight: 600;
+    padding: 2px 7px; border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .badge.up   { background: #E8F5EE; color: var(--green); }
+  .badge.down { background: #FDECEA; color: var(--accent); }
+  .badge.warn { background: #FFF3DC; color: var(--warn); }
+  .badge.flat { background: #F0EDE8; color: var(--ink3); }
+
+  /* ── MoM Table ── */
+  .mom-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    font-size: 13px;
+  }
+  .mom-table thead th {
+    background: var(--surface2);
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px; font-weight: 600; color: var(--ink3);
+    text-transform: uppercase; letter-spacing: .8px;
+    border-bottom: 1px solid var(--border2);
+  }
+  .mom-table thead th:first-child { border-radius: 8px 0 0 0; }
+  .mom-table thead th:last-child  { border-radius: 0 8px 0 0; }
+  .mom-table tbody tr { transition: background .15s; }
+  .mom-table tbody tr:hover td { background: var(--surface2); }
+  .mom-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    vertical-align: middle;
+  }
+  .mom-table tbody td.metric-name {
+    font-weight: 500; color: var(--ink);
+  }
+  .mom-table tbody td.value-col {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+  }
+  .mom-table tbody td.role-col {
+    font-size: 11.5px; color: var(--ink2);
+    max-width: 200px;
+  }
+  .mom-table .section-row td {
+    background: var(--surface2);
+    font-size: 11px; font-weight: 700;
+    color: var(--ink3); text-transform: uppercase;
+    letter-spacing: 1px; padding: 6px 16px;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  /* ── Vertical Cards ── */
+  .vertical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .v-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .v-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+  .v-header {
+    padding: 14px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .v-header.job  { background: #EEF2FF; }
+  .v-header.gds  { background: #FFF6E8; }
+  .v-header.veh  { background: #FFF0EE; }
+  .v-header.pty  { background: #EEFAF3; }
+  .v-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px; color: var(--ink);
+  }
+  .v-name span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 500;
+    color: var(--ink3); display: block;
+    margin-top: 1px; letter-spacing: .5px;
+  }
+  .v-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .v-icon.job { background: #C7D2FE; }
+  .v-icon.gds { background: #FDE68A; }
+  .v-icon.veh { background: #FECACA; }
+  .v-icon.pty { background: #A7F3D0; }
+  .v-body { padding: 16px 18px; }
+  .v-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .v-stat-label { font-size: 10px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: .6px; }
+  .v-stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; color: var(--ink); margin-top: 2px;
+  }
+  .v-pillar { font-size: 11.5px; color: var(--ink2); margin-bottom: 8px; }
+  .v-pillar strong { color: var(--ink); }
+  .v-insight {
+    background: var(--surface2);
+    border-left: 3px solid var(--border2);
+    padding: 8px 12px;
+    font-size: 12px; color: var(--ink2);
+    border-radius: 0 6px 6px 0;
+    margin-top: 10px;
+    line-height: 1.55;
+  }
+  .v-insight.winning { border-color: var(--green); background: #F0FAF5; }
+  .v-insight.warning { border-color: var(--accent); background: #FEF3F1; }
+
+  /* ── Pillar Bar ── */
+  .pillar-list { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+  .pillar-row { display: flex; align-items: center; gap: 10px; }
+  .pillar-label { font-size: 12px; font-weight: 500; width: 52px; color: var(--ink2); }
+  .pillar-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .pillar-bar { height: 100%; border-radius: 4px; transition: width .6s ease; }
+  .pillar-val { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink3); width: 40px; text-align: right; }
+
+  /* ── Blind/Win Sections ── */
+  .insight-list { display: flex; flex-direction: column; gap: 14px; }
+  .insight-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    align-items: start;
+    transition: box-shadow .2s;
+  }
+  .insight-item:hover { box-shadow: var(--shadow-lg); }
+  .insight-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .insight-icon.blind { background: #FDECEA; }
+  .insight-icon.win   { background: #E8F5EE; }
+  .insight-title {
+    font-weight: 600; font-size: 13.5px; color: var(--ink);
+    margin-bottom: 5px;
+  }
+  .insight-body { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .insight-body ul { padding-left: 16px; margin-top: 6px; }
+  .insight-body li { margin-bottom: 3px; }
+  .tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 100px;
+    text-transform: uppercase; letter-spacing: .6px;
+    margin-bottom: 6px;
+  }
+  .tag.blind  { background: #FDECEA; color: var(--accent); }
+  .tag.win    { background: #E8F5EE; color: var(--green); }
+  .tag.growth { background: #EEF2FF; color: var(--blue); }
+  .tag.action { background: #FFF3DC; color: var(--warn); }
+
+  /* ── Stakeholder Debate ── */
+  .debate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+  .debate-card {
+    border-radius: 10px; padding: 14px 16px;
+    font-size: 12.5px; line-height: 1.55;
+  }
+  .debate-card.brand { background: #FFF6E8; border: 1px solid #F0D89A; }
+  .debate-card.growth { background: #EEF2FF; border: 1px solid #C7D2FE; }
+  .debate-card.ops { background: #FFF0EE; border: 1px solid #FECACA; }
+  .debate-role {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .8px; margin-bottom: 6px;
+  }
+  .debate-card.brand  .debate-role { color: var(--gold); }
+  .debate-card.growth .debate-role { color: var(--blue); }
+  .debate-card.ops    .debate-role { color: var(--accent); }
+
+  /* ── Recommendation Options ── */
+  .rec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .rec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .rec-card.recommended::before {
+    content: 'RECOMMENDED';
+    position: absolute; top: 12px; right: -22px;
+    background: var(--accent); color: #fff;
+    font-size: 8px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 32px;
+    transform: rotate(45deg);
+    transform-origin: center;
+  }
+  .rec-letter {
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px; color: var(--border2);
+    line-height: 1; margin-bottom: 10px;
+  }
+  .rec-title { font-weight: 600; font-size: 14px; margin-bottom: 6px; color: var(--ink); }
+  .rec-timeline {
+    display: inline-flex; align-items: center;
+    font-size: 10px; font-weight: 600;
+    color: var(--ink3); text-transform: uppercase; letter-spacing: .6px;
+    background: var(--surface2); border-radius: 100px; padding: 2px 9px;
+    margin-bottom: 12px;
+  }
+  .rec-desc { font-size: 12.5px; color: var(--ink2); margin-bottom: 12px; line-height: 1.6; }
+  .pro-con { display: flex; flex-direction: column; gap: 5px; }
+  .pro-con-item {
+    font-size: 11.5px; color: var(--ink2);
+    display: flex; gap: 7px; align-items: flex-start;
+  }
+  .pro-con-item .dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .pro-con-item.pro .dot { background: var(--green); }
+  .pro-con-item.con .dot { background: var(--accent2); }
+
+  /* ── Growth Pipeline ── */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .pipeline-step {
+    padding: 20px 18px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .pipeline-step:last-child { border-right: none; }
+  .pipeline-arrow {
+    position: absolute; right: -10px; top: 50%;
+    transform: translateY(-50%);
+    width: 20px; height: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; z-index: 1;
+    color: var(--ink3);
+  }
+  .pipeline-step:last-child .pipeline-arrow { display: none; }
+  .pipeline-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .8px; color: var(--ink3); margin-bottom: 6px;
+  }
+  .pipeline-output {
+    font-weight: 600; font-size: 13px; color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .pipeline-input {
+    font-size: 11.5px; color: var(--accent); font-weight: 500;
+  }
+  .pipeline-status { margin-top: 8px; }
+
+  /* ── Context Box ── */
+  .context-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px;
+    font-size: 13px; color: var(--ink2); line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .context-box strong { color: var(--ink); }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* ── User Voice ── */
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .voice-col { }
+  .voice-header {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .9px; padding: 8px 14px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 0;
+  }
+  .voice-header.pos { background: #E8F5EE; color: var(--green); }
+  .voice-header.neg { background: #FDECEA; color: var(--accent); }
+  .voice-quotes {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 12px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .quote {
+    font-size: 12px; color: var(--ink2);
+    padding: 8px 12px;
+    background: var(--surface2);
+    border-radius: 6px;
+    line-height: 1.55;
+    border-left: 2px solid var(--border2);
+    font-style: italic;
+  }
+  .quote.pos { border-color: var(--green); }
+  .quote.neg { border-color: var(--accent2); }
+
+  /* ── Worst Case Banner ── */
+  .worst-case {
+    background: #FEF3F1;
+    border: 1px solid #FECDC7;
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 12.5px; color: #9B2A1A;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .worst-case-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Questions ── */
+  .q-list { display: flex; flex-direction: column; gap: 10px; }
+  .q-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 13px; color: var(--ink2);
+  }
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--accent);
+    background: #FDECEA;
+    border-radius: 5px;
+    padding: 2px 7px;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ── Bar Chart (CSS) ── */
+  .bar-chart { display: flex; gap: 8px; align-items: flex-end; height: 80px; }
+  .bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  .bar {
+    width: 100%; border-radius: 4px 4px 0 0;
+    transition: opacity .2s;
+    position: relative;
+  }
+  .bar:hover { opacity: .8; }
+  .bar-val { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink3); }
+  .bar-lbl { font-size: 10px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: .4px; }
+
+  /* ── Mini Chip ── */
+  .chip {
+    display: inline-flex; align-items: center;
+    font-size: 11px; font-weight: 500;
+    background: var(--surface2); color: var(--ink2);
+    border: 1px solid var(--border); border-radius: 100px;
+    padding: 2px 9px;
+  }
+
+  /* ── Flywheel ── */
+  .flywheel-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .flywheel-legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    padding: 14px 24px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    font-size: 11px; color: var(--ink3);
+  }
+  .flywheel-legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* Layer rows */
+  .fw-layer {
+    padding: 0 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .fw-layer:last-child { border-bottom: none; }
+  .fw-layer-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.2px; color: var(--ink3);
+    padding: 12px 0 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .fw-layer-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .fw-nodes {
+    display: grid;
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+  .fw-nodes.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .fw-nodes.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .fw-nodes.cols-5 { grid-template-columns: repeat(5, 1fr); }
+
+  .fw-node {
+    border-radius: 10px;
+    padding: 14px 16px;
+    position: relative;
+    transition: transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .fw-node:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,21,18,.1); }
+
+  .fw-node.social   { background: #FFF6E8; border: 1px solid #F0D89A; }
+  .fw-node.output   { background: #EEF2FF; border: 1px solid #C7D2FE; }
+  .fw-node.growth   { background: #F0FAF5; border: 1px solid #A7F3D0; }
+  .fw-node.outcome  { background: #FEF3F1; border: 1px solid #FECDC7; }
+  .fw-node.feedback { background: #F5F2EE; border: 1px dashed var(--border2); }
+
+  .fw-node-icon { font-size: 20px; margin-bottom: 8px; }
+  .fw-node-title {
+    font-size: 12.5px; font-weight: 700; color: var(--ink);
+    margin-bottom: 4px; line-height: 1.3;
+  }
+  .fw-node-desc { font-size: 11px; color: var(--ink2); line-height: 1.55; }
+  .fw-node-metric {
+    display: inline-flex; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    margin-top: 7px;
+    padding: 2px 7px; border-radius: 100px;
+  }
+  .fw-node-metric.ok   { background: #E8F5EE; color: var(--green); }
+  .fw-node-metric.warn { background: #FFF3DC; color: var(--warn); }
+  .fw-node-metric.bad  { background: #FDECEA; color: var(--accent); }
+  .fw-node-metric.none { background: #F0EDE8; color: var(--ink3); }
+
+  /* Connector row between layers */
+  .fw-connector {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 6px 24px;
+    font-size: 11px; color: var(--ink3);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .fw-connector-line {
+    flex: 1; height: 1px;
+    background: repeating-linear-gradient(90deg, var(--border2) 0, var(--border2) 6px, transparent 6px, transparent 12px);
+  }
+  .fw-connector-arrow {
+    font-size: 14px; color: var(--ink3);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Status pill on output nodes */
+  .fw-status {
+    position: absolute; top: 10px; right: 10px;
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .fw-status.connected   { background: var(--green); box-shadow: 0 0 0 2px #E8F5EE; }
+  .fw-status.partial     { background: var(--warn);  box-shadow: 0 0 0 2px #FFF3DC; }
+  .fw-status.disconnected{ background: var(--accent); box-shadow: 0 0 0 2px #FDECEA; }
+
+  .fw-feedback-row {
+    display: flex; align-items: center; gap: 0;
+    padding: 12px 24px;
+    background: var(--surface2);
+    border-top: 1px solid var(--border);
+  }
+  .fw-feedback-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .8px; color: var(--ink3);
+    flex-shrink: 0; margin-right: 12px;
+  }
+  .fw-feedback-items {
+    display: flex; gap: 8px; flex: 1; flex-wrap: wrap;
+  }
+  .fw-feedback-item {
+    font-size: 11px; color: var(--ink2);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 3px 10px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .fw-arrow-back {
+    font-size: 12px; color: var(--accent);
+    background: #FDECEA; border-radius: 50%;
+    width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    margin-right: 8px; flex-shrink: 0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .site-header { padding: 16px 20px; }
+    .tab-panel   { padding: 24px 20px 48px; }
+    .tab-bar     { padding: 0 20px; }
+    .rec-grid, .debate-grid { grid-template-columns: 1fr; }
+    .pipeline    { grid-template-columns: 1fr 1fr; }
+    .voice-grid  { grid-template-columns: 1fr; }
+    .kpi-grid    { grid-template-columns: repeat(2, 1fr); }
+    .fw-nodes.cols-4, .fw-nodes.cols-5 { grid-template-columns: repeat(2, 1fr); }
+    .fw-nodes.cols-3 { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-mark">C</div>
+    <div>
+      <div class="logo-text">Chợ Tốt</div>
+      <div class="logo-sub">Social Performance</div>
+    </div>
+  </div>
+  <div class="header-meta">Updated: May 2026 · MKT Director Dashboard</div>
+</header>
+
+<!-- ── TAB BAR ── -->
+<nav class="tab-bar" id="tabBar">
+  <button class="tab-btn active" onclick="showTab('overview', this)">
+    <span class="tab-dot"></span> Overview
+  </button>
+  <button class="tab-btn" onclick="showTab('apr2026', this)">
+    <span class="tab-dot"></span> April 2026
+  </button>
+  <!-- New month tabs will be added here -->
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     TAB: OVERVIEW — Month over Month
+════════════════════════════════════════════════ -->
+<div id="tab-overview" class="tab-panel active">
+
+  <h1 class="page-title">Overview — Month over Month</h1>
+  <p class="page-sub">4 Verticals · Facebook Paid Social · B2C Campaigns</p>
+
+  <!-- MoM KPI Summary Table -->
+  <section class="section">
+    <div class="card">
+      <h3 class="sub-title">Core Metrics — All Verticals Combined</h3>
+      <table class="mom-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Mar 2026</th>
+            <th>Apr 2026</th>
+            <th>MoM</th>
+            <th>Signal</th>
+            <th>Growth Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="section-row"><td colspan="6">Delivery</td></tr>
+          <tr>
+            <td class="metric-name">Total Reach</td>
+            <td class="value-col">~2,775,000</td>
+            <td class="value-col">6,123,206</td>
+            <td><span class="badge up">+120.88%</span></td>
+            <td>✅</td>
+            <td class="role-col">Remarketing pool — audience warm-up</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Total Impressions</td>
+            <td class="value-col">~3,568,000</td>
+            <td class="value-col">7,999,978</td>
+            <td><span class="badge up">+124.22%</span></td>
+            <td>✅</td>
+            <td class="role-col">Frequency build for Growth</td>
+          </tr>
+          <tr>
+            <td class="metric-name">CPM</td>
+            <td class="value-col">$0.98</td>
+            <td class="value-col">$0.75</td>
+            <td><span class="badge up">-23.62%</span></td>
+            <td>✅</td>
+            <td class="role-col">Efficient media buying</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Frequency</td>
+            <td class="value-col">1.28</td>
+            <td class="value-col">1.30</td>
+            <td><span class="badge flat">+1.51%</span></td>
+            <td>⚠️</td>
+            <td class="role-col">Too low for warm audience pool</td>
+          </tr>
+          <tr class="section-row"><td colspan="6">Engagement</td></tr>
+          <tr>
+            <td class="metric-name">Post Engagement</td>
+            <td class="value-col">~950,000</td>
+            <td class="value-col">4,430,714</td>
+            <td><span class="badge up">+366.56%</span></td>
+            <td>⚠️</td>
+            <td class="role-col">Vanity — mostly passive likes</td>
+          </tr>
+          <tr>
+            <td class="metric-name">CPE</td>
+            <td class="value-col">$0.0038</td>
+            <td class="value-col">$0.0014</td>
+            <td><span class="badge up">-63.29%</span></td>
+            <td>✅</td>
+            <td class="role-col">Cost-efficient distribution</td>
+          </tr>
+          <tr class="section-row"><td colspan="6">Buzz (Intent Signals)</td></tr>
+          <tr>
+            <td class="metric-name">Total Buzz</td>
+            <td class="value-col">1,427</td>
+            <td class="value-col">1,042</td>
+            <td><span class="badge down">-26.98%</span></td>
+            <td>🔴</td>
+            <td class="role-col">Retargeting data points — declining</td>
+          </tr>
+          <tr style="background:#FFFBF0">
+            <td class="metric-name" style="color:var(--warn)">Buzz / Reach Ratio <span style="font-size:10px;font-weight:400;color:var(--ink3)">(per 100K reach)</span></td>
+            <td class="value-col" style="color:var(--ink2)">51.4</td>
+            <td class="value-col" style="color:var(--accent);font-weight:700">17.0</td>
+            <td><span class="badge down">-66.9%</span></td>
+            <td>🔴</td>
+            <td class="role-col" style="color:var(--accent)"><strong>Reach tăng 2x nhưng buzz quality/reach giảm 67% — đang mua audience kém intent hơn</strong></td>
+          </tr>
+          <tr>
+            <td class="metric-name">Cost per Buzz</td>
+            <td class="value-col">$2.45</td>
+            <td class="value-col">$5.75</td>
+            <td><span class="badge down">+134.55%</span></td>
+            <td>🔴</td>
+            <td class="role-col">Intent signal getting expensive</td>
+          </tr>
+          <tr class="section-row"><td colspan="6">Brand Love</td></tr>
+          <tr>
+            <td class="metric-name">Net Followers</td>
+            <td class="value-col">-919</td>
+            <td class="value-col">-629</td>
+            <td><span class="badge warn">+31.6%</span></td>
+            <td>⚠️</td>
+            <td class="role-col">Improving but still negative</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Sentiment Score</td>
+            <td class="value-col">—</td>
+            <td class="value-col">0.73</td>
+            <td><span class="badge flat">—</span></td>
+            <td>🟡</td>
+            <td class="role-col">Stable, not "brand love" yet</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Total Mentions</td>
+            <td class="value-col">—</td>
+            <td class="value-col">~9,575</td>
+            <td><span class="badge flat">—</span></td>
+            <td>🟡</td>
+            <td class="role-col">PTY-dominated, JOB ≈ 0</td>
+          </tr>
+          <tr class="section-row"><td colspan="6">Reward Program</td></tr>
+          <tr>
+            <td class="metric-name">Voucher Redemptions</td>
+            <td class="value-col">756</td>
+            <td class="value-col">420</td>
+            <td><span class="badge down">-44%</span></td>
+            <td>🔴</td>
+            <td class="role-col">Brand love loop broken</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Vertical Performance Summary -->
+  <section class="section">
+    <h2 class="section-title">📊 Vertical Performance — April 2026</h2>
+    <div class="vertical-grid">
+
+      <!-- VEH -->
+      <div class="v-card">
+        <div class="v-header veh">
+          <div class="v-name">VEH <span>Chợ Tốt Xe</span></div>
+          <div class="v-icon veh">🚗</div>
+        </div>
+        <div class="v-body">
+          <div class="v-stats" style="grid-template-columns:repeat(4,1fr)">
+            <div>
+              <div class="v-stat-label">Reach</div>
+              <div class="v-stat-value">1.8M</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz</div>
+              <div class="v-stat-value">537</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz/100K</div>
+              <div class="v-stat-value" style="font-size:15px;margin-top:3px;color:var(--green)">29.6</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Cost/Buzz</div>
+              <div class="v-stat-value" style="font-size:13px;margin-top:5px;font-family:'JetBrains Mono',monospace">$3.68</div>
+            </div>
+          </div>
+          <div class="v-pillar">Top pillar: <strong>Trust</strong> (89% of top-5 buzz)</div>
+          <div class="v-pillar">Core TA: <strong>Nam 35–44</strong> · 12 posts · 44.8 buzz/post</div>
+          <div class="v-insight winning">🏆 Best discussion efficiency. Policy content (xe xăng 2027) = 307 buzz single post — highest across all verticals.</div>
+        </div>
+      </div>
+
+      <!-- JOB -->
+      <div class="v-card">
+        <div class="v-header job">
+          <div class="v-name">JOB <span>Việc Làm Tốt</span></div>
+          <div class="v-icon job">💼</div>
+        </div>
+        <div class="v-body">
+          <div class="v-stats" style="grid-template-columns:repeat(4,1fr)">
+            <div>
+              <div class="v-stat-label">Reach</div>
+              <div class="v-stat-value">1.7M</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz</div>
+              <div class="v-stat-value">207</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz/100K</div>
+              <div class="v-stat-value" style="font-size:15px;margin-top:3px;color:var(--warn)">11.9</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Cost/Buzz</div>
+              <div class="v-stat-value" style="font-size:13px;margin-top:5px;font-family:'JetBrains Mono',monospace">$41.8</div>
+            </div>
+          </div>
+          <div class="v-pillar">Top pillar: <strong>Talk + Hype</strong> (blue-collar relatable)</div>
+          <div class="v-pillar">Core TA: <strong>Nam/Nữ 25–34</strong> · 24 posts · 8.6 buzz/post</div>
+          <div class="v-insight warning">⚠️ Trust pillar failed. Blue-collar apply decisions need trust — without it, high engagement won't convert.</div>
+        </div>
+      </div>
+
+      <!-- GDS -->
+      <div class="v-card">
+        <div class="v-header gds">
+          <div class="v-name">GDS <span>Chợ Tốt (Đồ cũ)</span></div>
+          <div class="v-icon gds">📦</div>
+        </div>
+        <div class="v-body">
+          <div class="v-stats" style="grid-template-columns:repeat(4,1fr)">
+            <div>
+              <div class="v-stat-label">Reach</div>
+              <div class="v-stat-value">700K+</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz</div>
+              <div class="v-stat-value">156</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz/100K</div>
+              <div class="v-stat-value" style="font-size:15px;margin-top:3px;color:var(--green)">20.8</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Cost/Buzz</div>
+              <div class="v-stat-value" style="font-size:13px;margin-top:5px;font-family:'JetBrains Mono',monospace">$31.4</div>
+            </div>
+          </div>
+          <div class="v-pillar">Top pillar: <strong>Trust</strong> (market price + anti-scam)</div>
+          <div class="v-pillar">Core TA: <strong>Nam 25–34</strong> · 9 posts · 17.3 buzz/post</div>
+          <div class="v-insight winning">🏆 Best buzz/post ratio (excluding VEH outlier). Severely under-resourced — only 9 posts.</div>
+        </div>
+      </div>
+
+      <!-- PTY -->
+      <div class="v-card">
+        <div class="v-header pty">
+          <div class="v-name">PTY <span>Nhà Tốt</span></div>
+          <div class="v-icon pty">🏠</div>
+        </div>
+        <div class="v-body">
+          <div class="v-stats" style="grid-template-columns:repeat(4,1fr)">
+            <div>
+              <div class="v-stat-label">Reach</div>
+              <div class="v-stat-value">1.8M</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz</div>
+              <div class="v-stat-value">142</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Buzz/100K</div>
+              <div class="v-stat-value" style="font-size:15px;margin-top:3px;color:var(--accent)">7.8</div>
+            </div>
+            <div>
+              <div class="v-stat-label">Cost/Buzz</div>
+              <div class="v-stat-value" style="font-size:13px;margin-top:5px;font-family:'JetBrains Mono',monospace">$4.75</div>
+            </div>
+          </div>
+          <div class="v-pillar">Engagement pillars: <strong>Help + Hype (Rental)</strong> · Reach pillar: <strong>News/Insight</strong></div>
+          <div class="v-pillar">Core TA: <strong>35–44 &amp; 25–34</strong> · 28 posts (dual-track) · 5.1 buzz/post*</div>
+          <div class="v-insight" style="border-color:var(--blue);background:#F0F4FF">ℹ️ 28 posts gồm 2 track: <strong>News/Insight</strong> (reach-only KPI — stay relevant, catch up market) + <strong>Engagement pillars</strong> (buzz/engagement KPI). Buzz/post bị kéo thấp do News/Insight posts chưa được tách ra khỏi báo cáo.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrated Content-to-Conversion Flywheel -->
+  <section class="section">
+    <h2 class="section-title">🔄 Integrated Content-to-Conversion Flywheel</h2>
+    <p style="font-size:13px;color:var(--ink3);margin-bottom:16px">Social không hoạt động độc lập — đây là upstream engine tạo tài nguyên cho toàn bộ Performance Marketing. Mỗi output của Social là một input của Growth.</p>
+
+    <div class="flywheel-wrap">
+
+      <!-- Legend -->
+      <div class="flywheel-legend">
+        <div class="flywheel-legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Brand / Social (Producer)</div>
+        <div class="flywheel-legend-item"><div class="legend-dot" style="background:var(--blue)"></div> 4 Social Outputs → Growth Inputs</div>
+        <div class="flywheel-legend-item"><div class="legend-dot" style="background:var(--green)"></div> Growth / Digital (Consumer)</div>
+        <div class="flywheel-legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Platform Outcomes</div>
+        <div class="flywheel-legend-item" style="margin-left:auto;gap:12px">
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span> Pipeline connected</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--warn);display:inline-block"></span> Partial</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></span> Disconnected</span>
+        </div>
+      </div>
+
+      <!-- Layer 1: Social Content Production -->
+      <div class="fw-layer">
+        <div class="fw-layer-label">① BRAND / SOCIAL — Content Production</div>
+        <div class="fw-nodes cols-5">
+          <div class="fw-node social">
+            <div class="fw-node-icon">🔥</div>
+            <div class="fw-node-title">Trust</div>
+            <div class="fw-node-desc">News, chính sách, insight thị trường, anti-scam</div>
+            <div class="fw-node-metric ok">Best buzz driver</div>
+          </div>
+          <div class="fw-node social">
+            <div class="fw-node-icon">😄</div>
+            <div class="fw-node-title">Hype</div>
+            <div class="fw-node-desc">Skit, entertainment, relatable content</div>
+            <div class="fw-node-metric ok">High share rate</div>
+          </div>
+          <div class="fw-node social">
+            <div class="fw-node-icon">💬</div>
+            <div class="fw-node-title">Talk</div>
+            <div class="fw-node-desc">So sánh, debate, community discussion</div>
+            <div class="fw-node-metric warn">Needs CTA redesign</div>
+          </div>
+          <div class="fw-node social">
+            <div class="fw-node-icon">📚</div>
+            <div class="fw-node-title">Help</div>
+            <div class="fw-node-desc">Education, hướng dẫn, quy trình</div>
+            <div class="fw-node-metric warn">Awareness only</div>
+          </div>
+          <div class="fw-node social" style="background:#F5F2EE;border-style:dashed">
+            <div class="fw-node-icon">📸</div>
+            <div class="fw-node-title">UGC / Organic</div>
+            <div class="fw-node-desc">User advocacy, success cases, organic mentions</div>
+            <div class="fw-node-metric none">Untapped</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector -->
+      <div class="fw-connector">
+        <div class="fw-connector-line"></div>
+        <div class="fw-connector-arrow">↓</div>
+        <span style="font-size:11px;font-weight:600;color:var(--ink3);padding:0 10px">Social produces 4 upstream resources for Growth</span>
+        <div class="fw-connector-arrow">↓</div>
+        <div class="fw-connector-line"></div>
+      </div>
+
+      <!-- Layer 2: 4 Social Outputs = Growth Inputs -->
+      <div class="fw-layer">
+        <div class="fw-layer-label">② 4 SOCIAL OUTPUTS → GROWTH INPUTS</div>
+        <div class="fw-nodes cols-4">
+
+          <div class="fw-node output" style="position:relative">
+            <div class="fw-status partial"></div>
+            <div class="fw-node-icon">📡</div>
+            <div class="fw-node-title">Reach &amp; Frequency</div>
+            <div class="fw-node-desc">Tăng điểm chạm, build warm audience pool. Growth dễ remarketing vì user đã thấy brand trước.</div>
+            <div style="margin-top:10px;padding:8px;background:#fff;border-radius:6px;border:1px solid var(--border)">
+              <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Apr status</div>
+              <div style="font-size:11.5px;color:var(--warn)">Reach 6.1M ✅ · Freq. 1.3 ⚠️ — cần ≥3x để warm pool hiệu quả</div>
+            </div>
+            <div class="fw-node-metric warn">Freq. 1.3 / needs 3+</div>
+          </div>
+
+          <div class="fw-node output" style="position:relative">
+            <div class="fw-status disconnected"></div>
+            <div class="fw-node-icon">🎯</div>
+            <div class="fw-node-title">Buzz &amp; Footprints</div>
+            <div class="fw-node-desc">Comment, share, save = behavioral signals. Growth dùng để build Custom Audience retarget &amp; lookalike chất lượng cao.</div>
+            <div style="margin-top:10px;padding:8px;background:#fff;border-radius:6px;border:1px solid var(--border)">
+              <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Apr status</div>
+              <div style="font-size:11.5px;color:var(--accent)">1,042 intent signals · Buzz/100K: 17.0 📉 · Pipeline to Growth: <strong>NOT CONNECTED</strong></div>
+            </div>
+            <div class="fw-node-metric bad">Pipeline disconnected</div>
+          </div>
+
+          <div class="fw-node output" style="position:relative">
+            <div class="fw-status disconnected"></div>
+            <div class="fw-node-icon">❤️</div>
+            <div class="fw-node-title">Brand Love</div>
+            <div class="fw-node-desc">Follower tăng + sentiment tốt = audience đã quen brand. Growth convert tốt hơn, CPM thấp hơn với warm audience có brand affinity.</div>
+            <div style="margin-top:10px;padding:8px;background:#fff;border-radius:6px;border:1px solid var(--border)">
+              <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Apr status</div>
+              <div style="font-size:11.5px;color:var(--accent)">Net follows -629 🔴 · Reward -44% · CVR lift: <strong>NOT MEASURED</strong></div>
+            </div>
+            <div class="fw-node-metric bad">Community bleeding</div>
+          </div>
+
+          <div class="fw-node output" style="position:relative">
+            <div class="fw-status disconnected"></div>
+            <div class="fw-node-icon">🎨</div>
+            <div class="fw-node-title">Creative Assets</div>
+            <div class="fw-node-desc">Top-performing posts = market-validated messages. Growth adapt/reuse làm banner, story, app campaign creative — tiết kiệm chi phí test.</div>
+            <div style="margin-top:10px;padding:8px;background:#fff;border-radius:6px;border:1px solid var(--border)">
+              <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Apr status</div>
+              <div style="font-size:11.5px;color:var(--accent)">VEH xe xăng 2027 (307 buzz), JOB skit, PTY rental — chưa được reuse bởi Growth. <strong>Lost asset.</strong></div>
+            </div>
+            <div class="fw-node-metric bad">No reuse pipeline</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Connector -->
+      <div class="fw-connector">
+        <div class="fw-connector-line"></div>
+        <div class="fw-connector-arrow">↓</div>
+        <span style="font-size:11px;font-weight:600;color:var(--ink3);padding:0 10px">Growth activates resources into campaigns</span>
+        <div class="fw-connector-arrow">↓</div>
+        <div class="fw-connector-line"></div>
+      </div>
+
+      <!-- Layer 3: Growth Activation -->
+      <div class="fw-layer">
+        <div class="fw-layer-label">③ GROWTH / DIGITAL — Campaign Activation</div>
+        <div class="fw-nodes cols-4">
+          <div class="fw-node growth">
+            <div class="fw-node-icon">🔁</div>
+            <div class="fw-node-title">Remarketing</div>
+            <div class="fw-node-desc">Bám đuổi user đã thấy Social content. Dùng Reach pool từ Social làm base audience.</div>
+            <div class="fw-node-metric warn">Input: Reach pool (Freq &lt;3)</div>
+          </div>
+          <div class="fw-node growth">
+            <div class="fw-node-icon">📌</div>
+            <div class="fw-node-title">Retargeting Intent</div>
+            <div class="fw-node-desc">Target user đã buzz (comment/share) — high-intent signals từ Social. Lookalike từ buzz audiences.</div>
+            <div class="fw-node-metric bad">Input: Buzz data (not fed)</div>
+          </div>
+          <div class="fw-node growth">
+            <div class="fw-node-icon">📱</div>
+            <div class="fw-node-title">App Install Campaign</div>
+            <div class="fw-node-desc">Drive New App User từ audience đã warm. Brand-familiar users = lower CPI + higher activation rate.</div>
+            <div class="fw-node-metric bad">Input: Brand love (negative)</div>
+          </div>
+          <div class="fw-node growth">
+            <div class="fw-node-icon">🧪</div>
+            <div class="fw-node-title">Paid Creative Testing</div>
+            <div class="fw-node-desc">Reuse Social top-posts làm ad creative. Social đã test organically → Growth scale paid với creative đã proven.</div>
+            <div class="fw-node-metric bad">Input: Creative assets (none)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector -->
+      <div class="fw-connector">
+        <div class="fw-connector-line"></div>
+        <div class="fw-connector-arrow">↓</div>
+        <span style="font-size:11px;font-weight:600;color:var(--ink3);padding:0 10px">Growth campaigns drive platform outcomes</span>
+        <div class="fw-connector-arrow">↓</div>
+        <div class="fw-connector-line"></div>
+      </div>
+
+      <!-- Layer 4: Platform Outcomes -->
+      <div class="fw-layer">
+        <div class="fw-layer-label">④ PLATFORM OUTCOMES</div>
+        <div class="fw-nodes cols-4">
+          <div class="fw-node outcome">
+            <div class="fw-node-icon">📊</div>
+            <div class="fw-node-title">DAU</div>
+            <div class="fw-node-desc">Daily Active Users — user quay lại app/web hàng ngày. Được nuôi bởi remarketing + brand familiarity.</div>
+          </div>
+          <div class="fw-node outcome">
+            <div class="fw-node-icon">🤝</div>
+            <div class="fw-node-title">DAU with Lead</div>
+            <div class="fw-node-desc">User active VÀ có intent (gửi lead, liên hệ seller). Cao hơn khi retargeting từ buzz audiences.</div>
+          </div>
+          <div class="fw-node outcome">
+            <div class="fw-node-icon">⬇️</div>
+            <div class="fw-node-title">New App User</div>
+            <div class="fw-node-desc">First-time install từ app campaign. CPI thấp hơn khi user đã biết brand qua Social.</div>
+          </div>
+          <div class="fw-node outcome">
+            <div class="fw-node-icon">✅</div>
+            <div class="fw-node-title">Activated App User</div>
+            <div class="fw-node-desc">User install + complete first key action. Cao hơn khi Social đã build trust trước khi install.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback Loop -->
+      <div class="fw-feedback-row">
+        <div class="fw-arrow-back">↺</div>
+        <div class="fw-feedback-label">Feedback Loop</div>
+        <div class="fw-feedback-items">
+          <div class="fw-feedback-item">📈 Which content pillar drives highest DAU?</div>
+          <div class="fw-feedback-item">🎯 Which buzz segment converts best to lead?</div>
+          <div class="fw-feedback-item">🎨 Which Social creative works best as Growth ad?</div>
+          <div class="fw-feedback-item">❤️ Does follower growth correlate with lower CPI?</div>
+          <span style="font-size:11px;color:var(--ink3);margin-left:4px;font-style:italic">→ Answers inform next month's Social content strategy</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Current State Alert -->
+    <div class="worst-case" style="margin-top:16px">
+      <span class="worst-case-icon">⚠️</span>
+      <span><strong>Current state — Apr 2026:</strong> 3 trong 4 pipeline connections đang DISCONNECTED. Social đang produce outputs nhưng Growth không consume được. Kết quả: Growth phải dùng cold audiences, tốn thêm budget để warm — trong khi Social đã có 1,042 intent signals, 6.1M reach pool, và proven creative chưa được dùng. Đây là <strong>lost efficiency ở cả hai team</strong>, không phải lỗi của riêng ai.</span>
+    </div>
+  </section>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB: APRIL 2026 — Detail
+════════════════════════════════════════════════ -->
+<div id="tab-apr2026" class="tab-panel">
+
+  <h1 class="page-title">April 2026 — Detail Analysis</h1>
+  <p class="page-sub">Monthly Report · 4 Verticals (JOB, GDS, VEH, PTY) · B2C Only</p>
+
+  <!-- Context -->
+  <div class="context-box">
+    <strong>Context tháng 4:</strong> Đây là giai đoạn triển khai ban đầu cho cả 4 chiến dịch B2C theo vertical, với các mốc thời gian ra mắt xen kẽ trong đầu tháng (2 campaign ngày 2/4, 2 campaign ngày 6/4). Ngân sách tăng nhẹ vào cuối tháng (+$500/vertical) để duy trì awareness trong kỳ nghỉ lễ. Việc liên tục thử nghiệm creative và thiết lập adset mới ảnh hưởng đến các chỉ số, đặc biệt là cost per buzz.
+  </div>
+
+  <!-- KPI Cards -->
+  <section class="section">
+    <h2 class="section-title">📈 Campaign Results — All Verticals</h2>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Reach</div>
+        <div class="kpi-value">6.1M</div>
+        <span class="badge up">+120.88% MoM</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Impressions</div>
+        <div class="kpi-value">8.0M</div>
+        <span class="badge up">+124.22% MoM</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Post Engagement</div>
+        <div class="kpi-value">4.4M</div>
+        <span class="badge up">+366.56% MoM</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">CPE</div>
+        <div class="kpi-value mono">$0.0014</div>
+        <span class="badge up">-63.29% MoM</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Buzz</div>
+        <div class="kpi-value">1,042</div>
+        <span class="badge down">-26.98% MoM</span>
+      </div>
+      <div class="kpi-card" style="border-color:var(--warn);background:#FFFBF5">
+        <div class="kpi-label" style="color:var(--warn)">Buzz / Reach (per 100K)</div>
+        <div class="kpi-value mono" style="color:var(--accent)">17.0</div>
+        <span class="badge down">-66.9% MoM</span>
+        <div style="font-size:10.5px;color:var(--ink3);margin-top:5px">Mar est: 51.4 / Reach tăng 2x nhưng buzz quality giảm 67%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Cost per Buzz</div>
+        <div class="kpi-value mono">$5.75</div>
+        <span class="badge down">+134.55% MoM</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">CPM</div>
+        <div class="kpi-value mono">$0.75</div>
+        <span class="badge up">-23.62% MoM</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Net Follows</div>
+        <div class="kpi-value">-629</div>
+        <span class="badge warn">Improving +31.6%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buzz by Pillar -->
+  <section class="section">
+    <div class="card">
+      <h3 class="sub-title">Buzz by Content Pillar — All Verticals</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
+        <div>
+          <div class="pillar-list">
+            <div class="pillar-row">
+              <div class="pillar-label">Trust</div>
+              <div class="pillar-bar-wrap"><div class="pillar-bar" style="width:90%;background:var(--accent)"></div></div>
+              <div class="pillar-val">4,427 imp/buzz</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Hype</div>
+              <div class="pillar-bar-wrap"><div class="pillar-bar" style="width:68%;background:var(--gold)"></div></div>
+              <div class="pillar-val">6,423</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Talk</div>
+              <div class="pillar-bar-wrap"><div class="pillar-bar" style="width:50%;background:var(--blue)"></div></div>
+              <div class="pillar-val">8,901</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Other</div>
+              <div class="pillar-bar-wrap"><div class="pillar-bar" style="width:28%;background:var(--border2)"></div></div>
+              <div class="pillar-val">14,705</div>
+            </div>
+            <div class="pillar-row">
+              <div class="pillar-label">Help</div>
+              <div class="pillar-bar-wrap"><div class="pillar-bar" style="width:15%;background:var(--green)"></div></div>
+              <div class="pillar-val">29,276</div>
+            </div>
+          </div>
+          <p style="font-size:11px;color:var(--ink3);margin-top:10px">Lower impressions/buzz = more efficient at generating conversation</p>
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--ink2);line-height:1.7">
+            <strong>Trust</strong> và <strong>Hype</strong> là hai pillar hiệu quả nhất để tạo conversation thực sự.
+            <strong>Help</strong> kéo reach tốt nhưng gần như không tối ưu cho discussion — phù hợp cho awareness, không phải buzz driver.
+          </p>
+          <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+            <span class="chip">Trust = news/insight ảnh hưởng tài chính</span>
+            <span class="chip">Hype = entertainment/skit relatable</span>
+            <span class="chip">Help = education → awareness only</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vertical Deep Dives -->
+  <section class="section">
+    <h2 class="section-title">🔍 Vertical Deep Dive</h2>
+
+    <!-- VEH -->
+    <div class="card" style="margin-bottom:16px;border-left:4px solid var(--accent)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:20px">🚗</span>
+        <div>
+          <h3 class="sub-title" style="margin-bottom:0">VEH — Chợ Tốt Xe</h3>
+          <span class="tag win">BEST PERFORMER</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
+        <div><div class="kpi-label">Reach</div><div class="kpi-value" style="font-size:20px">1.8M</div></div>
+        <div><div class="kpi-label">Buzz</div><div class="kpi-value" style="font-size:20px">537</div></div>
+        <div><div class="kpi-label">Posts</div><div class="kpi-value" style="font-size:20px">12</div></div>
+        <div><div class="kpi-label">Cost/Buzz</div><div class="kpi-value mono" style="font-size:18px">$3.68</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <p style="font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:10px">Top pillar: <strong>Trust</strong> (policy-driven). Bài xe xăng 2027 đạt <strong>307 buzz</strong> — cao nhất tuyệt đối toàn tháng. 130 comments + 177 shares đồng thời — pattern cực hiếm. Core TA: <strong>Nam 35–44</strong> (46.1% reach).</p>
+          <p style="font-size:12px;color:var(--ink3)">Benchmark cost/buzz: <strong>$3.68</strong> · Top-5 range: $2.40–$9.72</p>
+          <div style="margin-top:10px"><span class="tag win">Formula: Policy → Tài chính cá nhân → Massive buzz</span></div>
+        </div>
+        <div class="voice-grid" style="grid-template-columns:1fr">
+          <div class="voice-col">
+            <div class="voice-header pos">Positive</div>
+            <div class="voice-quotes">
+              <div class="quote pos">"đợt lướt chợ tốt thấy mấy con Chervolet đời 2014 với mấy con Honda city đời đầu"</div>
+              <div class="quote pos">"Lead 🚀 Cám ơn em trai chotot gần nhà ủng hộ 😍"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOB -->
+    <div class="card" style="margin-bottom:16px;border-left:4px solid var(--blue)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:20px">💼</span>
+        <div>
+          <h3 class="sub-title" style="margin-bottom:0">JOB — Việc Làm Tốt</h3>
+          <span class="tag blind">TRUST PILLAR FAILED</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
+        <div><div class="kpi-label">Reach</div><div class="kpi-value" style="font-size:20px">1.7M</div></div>
+        <div><div class="kpi-label">Buzz</div><div class="kpi-value" style="font-size:20px">207</div></div>
+        <div><div class="kpi-label">Posts</div><div class="kpi-value" style="font-size:20px">24</div></div>
+        <div><div class="kpi-label">Cost/Buzz</div><div class="kpi-value mono" style="font-size:18px">$41.8</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <p style="font-size:13px;color:var(--ink2);line-height:1.7">Top pillar: <strong>Talk + Hype</strong> (emotional/relatable). Core TA: Nam/Nữ <strong>25–34</strong> (73.8% reach, 71% buzz). Hype tạo viral thụ động, Talk cần redesign CTA. Trust gần như thất bại — critical vì đây là yếu tố quyết định apply.</p>
+          <div class="worst-case">
+            <span class="worst-case-icon">⚠️</span>
+            <span><strong>Worst case:</strong> JOB trở thành entertainment channel thay vì job discovery — người ta vào coi skit, cười, không apply. Engagement cao nhưng conversion thấp.</span>
+          </div>
+        </div>
+        <div>
+          <div class="voice-grid" style="grid-template-columns:1fr">
+            <div class="voice-col">
+              <div class="voice-header neg">Negative — Trust gap</div>
+              <div class="voice-quotes">
+                <div class="quote neg">"Nguồn miễn phí như fb, chotot thì job k chất lượng thôi"</div>
+                <div class="quote neg">"Anh cũng vậy, bỏ gần chục triệu cho chợ tốt mà không có ứng viên luôn"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GDS -->
+    <div class="card" style="margin-bottom:16px;border-left:4px solid var(--gold)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:20px">📦</span>
+        <div>
+          <h3 class="sub-title" style="margin-bottom:0">GDS — Chợ Tốt (Đồ cũ)</h3>
+          <span class="tag action">UNDER-RESOURCED</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
+        <div><div class="kpi-label">Reach</div><div class="kpi-value" style="font-size:20px">700K+</div></div>
+        <div><div class="kpi-label">Buzz</div><div class="kpi-value" style="font-size:20px">156</div></div>
+        <div><div class="kpi-label">Posts</div><div class="kpi-value" style="font-size:20px">9</div></div>
+        <div><div class="kpi-label">Buzz/Post</div><div class="kpi-value mono" style="font-size:18px">17.3</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:10px">Top pillar: <strong>Trust</strong> (giá thị trường + anti-scam). Content formula clear: Trust (news giá) + Talk (so sánh A vs B) + Hype (GenZ entry). Chỉ 9 posts cả tháng — constraint lớn nhất. Nam 25–34 core, nhưng buzz trải rộng đến 35+ tự nhiên.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="tag win">Best buzz/post efficiency</span>
+        <span class="tag action">Needs volume increase urgently</span>
+      </div>
+    </div>
+
+    <!-- PTY -->
+    <div class="card" style="border-left:4px solid var(--green)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:20px">🏠</span>
+        <div>
+          <h3 class="sub-title" style="margin-bottom:0">PTY — Nhà Tốt</h3>
+          <span class="tag growth">DUAL-TRACK STRATEGY</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
+        <div><div class="kpi-label">Reach</div><div class="kpi-value" style="font-size:20px">1.8M</div></div>
+        <div><div class="kpi-label">Buzz</div><div class="kpi-value" style="font-size:20px">142</div></div>
+        <div><div class="kpi-label">Posts</div><div class="kpi-value" style="font-size:20px">28</div></div>
+        <div><div class="kpi-label">Buzz/Post*</div><div class="kpi-value mono" style="font-size:18px;color:var(--ink3)">5.1</div></div>
+      </div>
+
+      <!-- Dual-track breakdown -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div style="background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;padding:14px">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--blue);margin-bottom:6px">📰 Track 1 — News/Insight (Reach KPI)</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.6">Đăng liên tục để <strong>stay relevant</strong> &amp; thể hiện am hiểu thị trường BĐS. Catch up news &amp; insight thường xuyên, dày dặn.<br><br><strong>KPI đúng:</strong> Reach · Impressions · CPM · Frequency<br><strong>KHÔNG đo:</strong> Buzz · Engagement rate</div>
+        </div>
+        <div style="background:#F0FAF5;border:1px solid #A7F3D0;border-radius:10px;padding:14px">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--green);margin-bottom:6px">💬 Track 2 — Engagement Pillars (Buzz KPI)</div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.6"><strong>Help</strong> (hướng dẫn, pháp lý, quy trình) · <strong>Hype</strong> (rental relatable) · <strong>Trust</strong> (chính sách, thuế) · <strong>Talk</strong><br><br><strong>KPI đúng:</strong> Buzz · Saves · Comments · Shares<br><strong>Benchmark riêng</strong> — không mix với News/Insight</div>
+        </div>
+      </div>
+
+      <div style="background:#FFFBF0;border:1px solid #F0D89A;border-radius:8px;padding:12px 14px;font-size:12.5px;color:var(--ink2);margin-bottom:12px">
+        ⚠️ <strong>Điểm mù đo lường:</strong> Chừng nào News/Insight posts chưa được tách riêng trong báo cáo, buzz/post 5.1 là con số misleading — nó trung bình hóa posts có KPI hoàn toàn khác nhau. Engagement pillars thực tế có thể đang perform tốt hơn nhiều so với con số này.
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="tag growth">Tách báo cáo: News/Insight vs Engagement pillars</span>
+        <span class="tag win">Hype Rental $1.9/buzz = hidden gem</span>
+        <span class="tag win">Help saves cao = consideration intent signal</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Blind Spots -->
+  <section class="section">
+    <h2 class="section-title">🔴 Blind Spots — 7 Điểm Mù Chiến Lược</h2>
+    <div class="insight-list">
+
+      <div class="insight-item">
+        <div class="insight-icon blind">🪟</div>
+        <div>
+          <div class="tag blind">Blind Spot #1 — Critical</div>
+          <div class="insight-title">Engagement ≠ Conversation — Đang đo sai metric</div>
+          <div class="insight-body">Engagement tăng 366% nhưng Buzz giảm 27% và cost/buzz tăng 134%. Phần lớn 4.4M engagements là passive likes không chuyển hóa thành discussion hay intent signal. Team đang optimize cho vanity metric.
+            <div class="debate-grid" style="margin-top:12px">
+              <div class="debate-card brand"><div class="debate-role">🟡 Brand</div>"Reach cao là tốt, đang xây awareness." → Sai nếu không có recall hay conversation.</div>
+              <div class="debate-card growth"><div class="debate-role">🔴 Growth</div>"Frequency 1.3 quá thấp — audience pool chưa đủ warm để remarketing, phải tốn thêm budget warming."</div>
+              <div class="debate-card ops"><div class="debate-role">🟠 Business</div>"Nếu engagement không dẫn đến intent, toàn bộ chi phí là brand awareness với efficiency thấp."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon blind">💼</div>
+        <div>
+          <div class="tag blind">Blind Spot #2 — Crisis</div>
+          <div class="insight-title">JOB Trust Pillar sụp đổ — chưa có plan fix</div>
+          <div class="insight-body">Trust "gần như thất bại" trên kênh Việc Làm. Đây là crisis vì blue-collar workers quyết định apply dựa trên trust: lương có thật không, công ty có uy tín không. User voice đã phản ánh rõ: "chotot thì job k chất lượng thôi."
+            <div class="worst-case" style="margin-top:10px">
+              <span class="worst-case-icon">⚠️</span>
+              <span>JOB có thể trở thành entertainment channel — people scroll, laugh, don't apply. High engagement, zero conversion.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon blind" style="background:#EEF2FF">🏠</div>
+        <div>
+          <div class="tag growth">Measurement Gap #3</div>
+          <div class="insight-title">PTY: Buzz/post 5.1 là con số misleading — News/Insight đang "pha loãng" metric của Engagement pillars</div>
+          <div class="insight-body">PTY có chiến lược dual-track hợp lý: <strong>News/Insight posts</strong> (reach-only KPI — stay relevant với BĐS market) và <strong>Engagement pillars</strong> (buzz/engagement KPI). Vấn đề không phải PTY đang produce sai content — mà là hai track này đang bị gộp chung vào một bucket báo cáo, khiến:
+            <ul style="margin-top:8px">
+              <li>News/Insight posts bị đánh giá kém vì buzz thấp (dù KPI của chúng là reach, không phải buzz)</li>
+              <li>Engagement pillars không được đánh giá đúng vì bị trung bình hóa với posts không có mục tiêu buzz</li>
+              <li>Buzz/100K 7.8 của PTY có thể cao hơn đáng kể nếu chỉ tính engagement-track posts</li>
+            </ul>
+            <div style="margin-top:10px;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:8px;padding:10px 12px;font-size:12px">
+              <strong style="color:var(--blue)">Action needed:</strong> Phân tách báo cáo PTY thành 2 track riêng. Track 1 (News/Insight): report reach, CPM, frequency. Track 2 (Engagement pillars): report buzz, buzz/post, cost/buzz. Chỉ khi tách ra mới biết engagement pillars đang perform như thế nào thật sự.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon blind">📉</div>
+        <div>
+          <div class="tag blind">Blind Spot #4</div>
+          <div class="insight-title">Net Followers -629 — Community đang chảy máu ngược</div>
+          <div class="insight-body">Unfollows 2,077 &gt; Follows 1,400 mặc dù campaign đang scale lớn. Có loại content đang "ô nhiễm" expectation của người follow. Chưa có phân tích Unfollow theo vertical hay content type.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon blind">📡</div>
+        <div>
+          <div class="tag blind">Blind Spot #5</div>
+          <div class="insight-title">Social Listening: PTY dominates, JOB ≈ 0 — Concentration risk</div>
+          <div class="insight-body">Toàn bộ 9,575 mentions gần như đến từ PTY (peak ~500/ngày). JOB là vertical có reach lớn nhất nhưng mentions tiệm cận 0. Sentiment score 0.73 là do PTY kéo lên — không phải reflection thật của toàn brand. Nếu PTY có crisis, toàn bộ brand health sẽ sập.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon blind">🎟️</div>
+        <div>
+          <div class="tag blind">Blind Spot #6</div>
+          <div class="insight-title">Reward Program: Anchor Dependency, không có Sustainable Mechanics</div>
+          <div class="insight-body">Redemption -44% (756→420) chủ yếu vì mất Viva Star Coffee free offer. Toàn bộ engagement phụ thuộc vào 1 anchor offer, không phải habit loop. Recommend "thêm anchor tháng 5" chỉ là patch, không phải fix cơ chế.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon blind">🔗</div>
+        <div>
+          <div class="tag blind">Blind Spot #7 — Structural</div>
+          <div class="insight-title">Social → Growth pipeline không tồn tại</div>
+          <div class="insight-body">Buzz data không được feed vào Custom Audiences. Top performing posts không được adapt cho app campaigns. Frequency 1.3 không được track như a Growth signal. Social đang report độc lập, Growth đang optimize độc lập — không có cross-team pipeline.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Winning Points -->
+  <section class="section">
+    <h2 class="section-title">🏆 Winning Points — 6 Điểm Đang Thật Sự Work</h2>
+    <div class="insight-list">
+
+      <div class="insight-item">
+        <div class="insight-icon win">🚗</div>
+        <div>
+          <div class="tag win">Win #1</div>
+          <div class="insight-title">VEH: Discussion efficiency champion của cả hệ thống</div>
+          <div class="insight-body">307 buzz từ 1 single post (xe xăng 2027) — cao nhất tuyệt đối. $3.68 cost/buzz — rẻ nhất 4 vertical. Formula: Policy/chính sách → tác động trực tiếp tài chính cá nhân = anxious buyer segment = massive conversation.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon win">💡</div>
+        <div>
+          <div class="tag win">Win #2</div>
+          <div class="insight-title">Trust pillar — công thức nhất quán xuyên suốt 3/4 verticals</div>
+          <div class="insight-body">VEH Trust: 89% buzz top-5. GDS Trust: #1 và #4 top posts. PTY Trust: $0.1–$0.4/buzz (cực kỳ hiệu quả). Người Việt mua tài sản lớn phản ứng mạnh nhất với thông tin ảnh hưởng trực tiếp đến tài chính. Trust không cần đắt để tạo buzz.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon win">💰</div>
+        <div>
+          <div class="tag win">Win #3</div>
+          <div class="insight-title">CPE $0.0014 — Media buying đang hoạt động xuất sắc</div>
+          <div class="insight-body">Top tier CPE cho Facebook tại thị trường VN. CPM giảm 23.62%. Team đang mua distribution rẻ và hiệu quả — đây là foundation tốt. Vấn đề là content trên đó chưa khai thác được hết tiềm năng.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon win">📦</div>
+        <div>
+          <div class="tag win">Win #4</div>
+          <div class="insight-title">GDS: Highest ROI per post — severely under-resourced</div>
+          <div class="insight-body">17.3 buzz/post với chỉ 9 posts. Nếu tăng lên 18 posts/tháng (2x volume), GDS có thể đạt 300+ buzz với content formula đã proven. Đây là vertical có potential ROI content cao nhất nếu được đầu tư đúng mức.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon win">🏠</div>
+        <div>
+          <div class="tag win">Win #5</div>
+          <div class="insight-title">PTY Dual-Track là chiến lược đúng — nhưng cần tách báo cáo</div>
+          <div class="insight-body">PTY có 2 track song song rõ ràng: <strong>News/Insight</strong> (volume cao, KPI = reach, thể hiện am hiểu BĐS market) và <strong>Engagement pillars</strong> (Help, Hype Rental, Trust). Đây là cách approach thông minh — News/Insight giữ brand relevant &amp; frequency mà không đốt budget cho engagement, để Engagement pillars compete fair với nhau. Bài "ads cho sinh viên" (Hype Rental) $1.9/buzz chứng minh khi chạy đúng format, PTY hoàn toàn có thể tạo buzz hiệu quả. <strong>Winning move cho tháng tới:</strong> tách báo cáo 2 track → mới biết engagement pillars đang thật sự perform ở mức nào.</div>
+        </div>
+      </div>
+
+      <div class="insight-item">
+        <div class="insight-icon win">💬</div>
+        <div>
+          <div class="tag win">Win #6</div>
+          <div class="insight-title">JOB Organic Advocacy — Chưa được khai thác</div>
+          <div class="insight-body">"từ hồi Kiểm quảng cáo app chợ tốt, em đã thật sự tìm được 2 job" — organic advocacy xuất hiện tự nhiên trong comment section. Đây là UGC và social proof chất lượng cao, có thể adapt thành creative asset cho Growth campaigns ngay.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Problem Framing -->
+  <section class="section">
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <h2 class="section-title" style="margin-bottom:8px">🧩 Problem Framing — Đặt lại đúng vấn đề</h2>
+      <p style="font-size:13px;color:var(--ink3);margin-bottom:16px;font-style:italic">Vấn đề báo cáo đang frame vs. vấn đề thật sự</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div>
+          <div class="tag blind">Framing hiện tại</div>
+          <p style="font-size:13.5px;color:var(--ink2);margin-top:8px;line-height:1.7">"Buzz giảm vì thiếu content hype và budget bị phân tán sang creative mới."</p>
+        </div>
+        <div>
+          <div class="tag win">Framing đúng hơn</div>
+          <p style="font-size:13.5px;color:var(--ink);margin-top:8px;line-height:1.7;font-weight:500">"Không có cơ chế đo lường Social đang contribute vào business outcomes gì — không biết buzz có correlation với platform metric nào không."</p>
+        </div>
+      </div>
+      <div class="worst-case" style="margin-top:16px">
+        <span class="worst-case-icon">⚠️</span>
+        <span><strong>Core gap:</strong> Cả 4 vertical report theo cùng metrics (reach, buzz, engagement) nhưng không có link đến JOB: Apply rate, VEH: Listing views/Lead, PTY: Inquiry rate, GDS: Buyer-seller match. Social đang được đo như media channel thay vì business driver.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations -->
+  <section class="section">
+    <h2 class="section-title">⚡ Recommendations — 3 Options</h2>
+    <div class="rec-grid">
+      <div class="rec-card">
+        <div class="rec-letter">A</div>
+        <div class="rec-title">Fix the Metrics</div>
+        <div class="rec-timeline">Tháng 5 — Quick Win</div>
+        <div class="rec-desc">Redefine KPI: dùng Buzz/Reach ratio thay vì absolute buzz. Thêm Click-to-Platform làm primary conversion metric. Social-to-Growth weekly brief: top 3 posts + Custom Audience list + adaptable creative.</div>
+        <div class="pro-con">
+          <div class="pro-con-item pro"><div class="dot"></div>Không cần thay đổi strategy, impact ngay tháng 5</div>
+          <div class="pro-con-item con"><div class="dot"></div>Patch — không giải quyết root cause</div>
+        </div>
+      </div>
+      <div class="rec-card recommended">
+        <div class="rec-letter">B</div>
+        <div class="rec-title">Vertical-Specific Playbook</div>
+        <div class="rec-timeline">Q3 — Balanced</div>
+        <div class="rec-desc">Tách content strategy, budget, KPI theo vertical. Scale GDS posts lên 18+/tháng. PTY: tách báo cáo thành 2 track (News/Insight reach-KPI vs Engagement pillars buzz-KPI). Rebuild JOB Trust pillar. Shared KPI: Social output → Growth input linkage.</div>
+        <div class="pro-con">
+          <div class="pro-con-item pro"><div class="dot"></div>Align với data insights thực tế từng vertical</div>
+          <div class="pro-con-item pro"><div class="dot"></div>PTY: đo đúng từng track, GDS: scale underinvested vertical</div>
+          <div class="pro-con-item con"><div class="dot"></div>Cần team adaptation time, drop ngắn hạn</div>
+        </div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-letter">C</div>
+        <div class="rec-title">Platform-First Conversion</div>
+        <div class="rec-timeline">Q3–Q4 — High Reward</div>
+        <div class="rec-desc">Redesign campaign objective từ buzz → platform micro-conversions. Mỗi post có CTA dẫn đến 1 action cụ thể trong app. Đo bằng DAU from social. Build full content flywheel: Social proven post → Growth creative brief → App campaign.</div>
+        <div class="pro-con">
+          <div class="pro-con-item pro"><div class="dot"></div>Align Social với business outcomes thực sự</div>
+          <div class="pro-con-item con"><div class="dot"></div>Cần Data team + cross-team buy-in, 3–6 tháng build</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Questions -->
+  <section class="section">
+    <h2 class="section-title">❓ 3 Câu Hỏi Cần Trả Lời Trước Tháng 5</h2>
+    <div class="q-list">
+      <div class="q-item">
+        <div class="q-num">Q1</div>
+        <div>Growth hiện đang remarketing vào Social engagers không? Nếu có, CVR của họ so với cold audience là bao nhiêu? <strong style="color:var(--accent)">→ Nếu không ai biết: Option A ngay lập tức.</strong></div>
+      </div>
+      <div class="q-item">
+        <div class="q-num">Q2</div>
+        <div>Bài VEH xe xăng 2027 (307 buzz, video format) có được dùng làm creative cho app campaign tháng 5 không? <strong style="color:var(--accent)">→ Nếu không: đây là lost asset cần fix ngay.</strong></div>
+      </div>
+      <div class="q-item">
+        <div class="q-num">Q3</div>
+        <div>Buzz hiện tại có correlation với platform metric nào không (listing clicks, app downloads, searches)? <strong style="color:var(--accent)">→ Nếu không có data đó: mọi optimization buzz đang làm trong bóng tối.</strong></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+<!-- ── JS: Tab switching ── -->
+<script>
+  function showTab(id, btn) {
+    // Hide all panels
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // Show target
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Animate pillar bars on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const bars = document.querySelectorAll('.pillar-bar');
+    bars.forEach(b => {
+      const w = b.style.width;
+      b.style.width = '0';
+      setTimeout(() => { b.style.width = w; }, 200);
+    });
+  });
+</script>
+
+</body>
+</html>
